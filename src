@@ -1,0 +1,68 @@
+import javax.swing.*;	//needed for the Swing classes
+import java.awt.event.*;//needed for ActionListener interface
+
+public class Recursion extends JFrame {	//Recursion inherits from JFrame class
+
+	private JPanel panel;				//to referencce a panel
+	private JLabel messageLabel;		//prompt for the user
+	private JTextField number;			//text field for user input
+	private JTextField fibNumber;		//text field for answer
+	private JButton displayButton;		//to reference a button
+	private final int WIDTH = 300;		//window width
+	private final int HEIGHT = 150;		//window height
+	
+	public Recursion() {				//constructor
+		
+		super("Recursive Method");		//call the superclass's constructor
+		setSize(WIDTH, HEIGHT);			//set window size
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//end program when user closes window 
+		
+		buildPanel();					//build panel
+		add(panel);						//add panel to frame
+		setVisible(true);				//display window
+	}									//end of constructor
+	
+	private void buildPanel() {			//build panel method
+		
+		messageLabel = new JLabel("Enter a small positive number: ");	//instructions
+		
+		number = new JTextField(5);		//text field 5 characters wide
+		fibNumber = new JTextField(5);	//text field 5 characters wide
+		
+		displayButton = new JButton("Display nth Fibonacci");	//create JButton object
+		displayButton.addActionListener(new ButtonListener());	//add action listener
+	
+		panel = new JPanel();			//create JPanel object
+		panel.add(messageLabel);		//add label
+		panel.add(number);				//add first text field
+		panel.add(displayButton);		//add button
+		panel.add(fibNumber);			//add second text field
+		
+	}									//end of buildPanel
+	
+	private class ButtonListener implements ActionListener {	//action listener class
+			
+		public void actionPerformed(ActionEvent e) {	//actionPerformed method with ActionEvent parameter
+			
+			String input = number.getText();			//get user input from first text field
+			int fib = fib(Integer.parseInt(input));		//call recursive method
+			
+			fibNumber.setText(String.valueOf(fib));		//set second text field to nth Fibonacci number
+		}												//end of actionPerformed
+	}													//end of ButtonListener
+	
+	public static int fib(int n) {		//recursive method
+		
+		if (n <= 1) {					//two base cases: 0 and 1
+			return n;
+		} else {						//all other circumstances
+			return fib(n-1) + fib(n-2);	//method calls itself to get nth Fibonacci number
+		}								
+	}									//end of recursive method
+	
+	public static void main(String[] args) {	//main method
+		
+		new Recursion();						//create object of Recursion
+	}											//end of main
+}												//end of Recursion
